@@ -1,6 +1,4 @@
 import streamlit as st
-from langchain import PromptTemplate
-#from langchain.llms import OpenAI #so vananenud rida ning asendatud allolevaga
 from langchain_community.llms import OpenAI
 import os
 
@@ -17,10 +15,7 @@ template = """
     USE CASE: write a story in 5 sentences, of an example weekend activity taking into account accomodation { accomodation }, age {agegroup} and preferences {preferences}, write a story in first person, example "I started my Saturday morning with ...";
 """
 
-prompt = PromptTemplate(
-    input_variables=["agegroup", "accomodation", "colorpreferences"],
-    template=template,
-)
+prompt = template
 
 def load_LLM(openai_api_key):
     """Logic for loading the chain you want to use should go here."""
@@ -48,7 +43,7 @@ def get_api_key():
     if openai_api_key:
         return openai_api_key
     # If OPENAI_API_KEY environment variable is not set, prompt user for input
-    input_text = streamlit.text_input(label="OpenAI API Key ",  placeholder="Ex: sk-2twmA8tfCb8un4...", key="openai_api_key_input")
+    input_text = st.text_input(label="OpenAI API Key ",  placeholder="Ex: sk-2twmA8tfCb8un4...", key="openai_api_key_input")
     return input_text
 
 openai_api_key = get_api_key()
@@ -90,9 +85,9 @@ st.button("*GENERATE TEXT*", type='secondary', help="Click to see an example of 
 st.markdown("### Your customer tailored content:")
 
 if content_input:
-#    if not openai_api_key:
-#        st.warning('Please insert OpenAI API Key. Instructions [here](https://help.openai.com/en/articles/4936850-where-do-i-find-my-secret-api-key)', icon="⚠️")
-#        st.stop()
+    if not openai_api_key:
+        st.warning('Please insert OpenAI API Key. Instructions [here](https://help.openai.com/en/articles/4936850-where-do-i-find-my-secret-api-key)', icon="⚠️")
+        st.stop()
 
     llm = load_LLM(openai_api_key=openai_api_key)
 
