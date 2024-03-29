@@ -69,8 +69,7 @@ def get_preferences():
     input_text = st.text_input(label="colorpreferences", key="colorpreferences_input")
     return input_text
 
-colorpreferences_input = get_colorpreferences()
-
+colorpreferences_input = get_preferences()
 
 def get_text():
     input_text = st.text_area(label="Content Input", label_visibility='collapsed', placeholder="Your content...", key="content_input")
