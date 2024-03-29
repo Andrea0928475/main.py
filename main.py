@@ -69,7 +69,7 @@ def get_preferences():
     input_text = st.text_input(label="color_preferences", key="color_preferences_input")
     return input_text
 
-preferences_input = get_colorpreferences()
+color_preferences_input = get_color_preferences()
 
 
 def get_text():
