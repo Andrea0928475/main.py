@@ -9,6 +9,7 @@ template = """
     PRODUCT input text: {content};
     CUSTOMER age group (y): {agegroup};
     CUSTOMER accomodation: {accomodation};
+    CUSTOMER color preferences: {color_preferences};
     TASK: Write a product description that is tailored into this customer's Age group, accommodation and preferences. Use age group specific slang.;
     FORMAT: Present the result in the following order: (PRODUCT DESCRIPTION), (BENEFITS), (USE CASE);
     PRODUCT DESCRIPTION: describe the product in 5 sentences;
@@ -17,7 +18,7 @@ template = """
 """
 
 prompt = PromptTemplate(
-    input_variables=["agegroup", "accomodation", "preferences"],
+    input_variables=["agegroup", "accomodation", "color_preferences"],
     template=template,
 )
 
@@ -65,10 +66,10 @@ def get_accomodation():
 accomodation_input = get_accomodation()
 
 def get_preferences():
-    input_text = st.text_input(label="preferences", key="preferences_input")
+    input_text = st.text_input(label="color_preferences", key="color_preferences_input")
     return input_text
 
-preferences_input = get_preferences()
+preferences_input = get_colorpreferences()
 
 
 def get_text():
@@ -96,7 +97,7 @@ if content_input:
 
     llm = load_LLM(openai_api_key=openai_api_key)
 
-    prompt_with_content = prompt.format(agegroup=option_agegroup, hobby=hobby_input, content=content_input)
+    prompt_with_content = prompt.format(agegroup=option_agegroup, colorpreferences=color_preferences_input, content=content_input)
 
     formatted_content = llm(prompt_with_content)
 
