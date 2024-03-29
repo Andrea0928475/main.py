@@ -9,7 +9,7 @@ template = """
     PRODUCT input text: {content};
     CUSTOMER age group (y): {agegroup};
     CUSTOMER accomodation: {accomodation};
-    CUSTOMER color preferences: {color_preferences};
+    CUSTOMER color preferences: {colorpreferences};
     TASK: Write a product description that is tailored into this customer's Age group, accommodation and preferences. Use age group specific slang.;
     FORMAT: Present the result in the following order: (PRODUCT DESCRIPTION), (BENEFITS), (USE CASE);
     PRODUCT DESCRIPTION: describe the product in 5 sentences;
@@ -18,7 +18,7 @@ template = """
 """
 
 prompt = PromptTemplate(
-    input_variables=["agegroup", "accomodation", "color_preferences"],
+    input_variables=["agegroup", "accomodation", "colorpreferences"],
     template=template,
 )
 
@@ -66,10 +66,10 @@ def get_accomodation():
 accomodation_input = get_accomodation()
 
 def get_preferences():
-    input_text = st.text_input(label="color_preferences", key="color_preferences_input")
+    input_text = st.text_input(label="colorpreferences", key="colorpreferences_input")
     return input_text
 
-color_preferences_input = get_color_preferences()
+colorpreferences_input = get_colorpreferences()
 
 
 def get_text():
@@ -84,7 +84,7 @@ if len(content_input.split(" ")) > 700:
 
 def update_text_with_example():
     print ("in updated")
-    st.session_state.content_input = "t shirts, all colors, cotton, responsible manufacturing"
+    st.session_state.content_input = "shoes, all colors, responsible manufacturing"
 
 st.button("*GENERATE TEXT*", type='secondary', help="Click to see an example of the content you will be converting.", on_click=update_text_with_example)
 
@@ -97,7 +97,7 @@ if content_input:
 
     llm = load_LLM(openai_api_key=openai_api_key)
 
-    prompt_with_content = prompt.format(agegroup=option_agegroup, colorpreferences=color_preferences_input, content=content_input)
+    prompt_with_content = prompt.format(agegroup=option_agegroup, colorpreferences=colorpreferences_input, content=content_input)
 
     formatted_content = llm(prompt_with_content)
 
